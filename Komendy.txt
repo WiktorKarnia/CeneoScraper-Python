@@ -1,0 +1,5 @@
+source .venv/Scripts/activate
+pip -V
+git init
+git remote add origin
+git pull origin master
