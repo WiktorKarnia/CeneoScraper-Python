@@ -11,32 +11,34 @@ page_tree = BeautifulSoup(page_response.text,"html.parser")
 # wybranie z kodu strony fragmentów odpowiadajacych poszczegolnym opiniom
 opinions = page_tree.select("li.review-box")
 
-opinion = opinions[0]
-opinion_id = opinion["data-entry-id"]
-# print(opinion_id)
-author = opinion.select('div.reviever-name-line')
-recomendation = opinion.select('div.product-reviever-summary')
-stars = opinion.select('span.review-score-count')
-purchased = opinion.select('div.product-review-pz')
-useful = opinion.select('button.vote-yes')[0]['data-total-vote'] 
-useless = opinion.select('button.vote-no')[0]['data-total-vote'] 
-print(useless)
-
-# - opinia: li.review-box
-# - identyfikator: li.review-box["data.entry-id"]
-# - autor: div.reviever-name-line
-# - rekomendacja: div.product-reviever-summary > em
-# - liczba gwiazdek: span.review-score-count
-# - czy potwierdzona zakupem: div.product-review-pz
-# - data wystawienia: span.review-time > time
-# ["datetime"] - pierwsze wystapienies
-# - data zakupu: span.review-time > time
-# ["datetime"] - drugie wystapienie
-# - przydatna: button.vote-yes ["data-total-votes"]
-# - nieprzydatna: button.vote-no ["data-total-votes"]
-# - treść: p.product-review-body
-# - wady: div.cons-cell > cons
-# - zalety div.pros-cell > pros
-
-
-# instrukcja skladowych dla pierwszej opini z listy
+for opinion in opinions:
+    opinion_id = opinion["data-entry-id"]
+    # print(opinion_id)
+    author = opinion.select('div.reviever-name-line').pop().string.strip()
+    try:
+        recomendation = opinion.select('div.product-reviever-summary').pop().string.strip()
+    except IndexError:
+        recomendation = None
+    stars = opinion.select('span.review-score-count').pop().string.strip()
+    try:
+        purchased = opinion.select('div.product-review-pz').pop().string.strip()
+    except IndexError:
+        purchased = None
+    useful = opinion.select('button.vote-yes').pop()['data-total-vote'] 
+    useless = opinion.select('button.vote-no').pop()['data-total-vote'] 
+    content = opinion.select('p.product-review-body').pop().get_text().strip()
+    try:
+        cons = opinion.select['div.cons-cell > ul'].pop().get_text().strip()
+    except IndexError:
+        cons = None
+    try:
+        pros = opinion.select['div.pros-cell > ul'].pop().get_text().strip()
+    except IndexError:
+        cons = None
+    date = opinion.select('span.reviev-time > time')
+    review_date = date.pop(0)["datetime"]
+    try:
+        purchase_date = date.pop(0)["datetime"]
+    except IndexError:
+        purchase_date = None
+    # print(opinion_id, author, recomendation, stars, content, pros, cons, useful, useless, purchased, purchase_date, review_date)
