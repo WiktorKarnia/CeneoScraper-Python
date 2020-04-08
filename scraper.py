@@ -26,10 +26,17 @@ selectors = {
             "purchase_date":['span.review-time > time:nth-of-type(2)', "datetime"],
             "reviev_date":['span.review-time > time:nth-of-type(1)', "datetime"]
         }
+
+def remove_whitespace(text):
+    
+    try:
+        for char in ["\n","\r"]:
+            return text.replace(char, ", ")
+    except AttributeError:
+        pass     
 #adres URL strony z opiniami
 url_prefix = "https://www.ceneo.pl"
 product_id = input("Podaj kod produktu: ")
-
 url_postfix = "#tab=reviews"
 url = url_prefix+"/"+product_id+url_postfix
 
@@ -54,8 +61,13 @@ while url is not None:
 
         features["opinion_id"] = int(opinion["data-entry-id"])
         features["purchased"] = True if features["purchased"] == "Opinia potwierdzona zakupem" else False
-        features["purchased"] = True
+        features["useful"] = int(features["useful"])
+        features["useless"] = int(features["useless"])
+        features["content"] = remove_whitespace(features["content"])
+        features["pros"] = remove_whitespace(features["pros"])
+        features["cons"] = remove_whitespace(features["cons"])
         
+
         opinions_list.append(features)
 
     try:
@@ -66,7 +78,7 @@ while url is not None:
     print("url:",url)
 
 
-with open(product_id+".json", 'w', encoding="UTF-8") as fp:
+with open("opinions/"+product_id+".json", 'w', encoding="UTF-8") as fp:
     json.dump(opinions_list, fp, ensure_ascii=False, separators=(",",": " ), indent=4)
 
 
