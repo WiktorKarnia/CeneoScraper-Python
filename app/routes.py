@@ -9,6 +9,6 @@ def index():
 def scraper():
     return "Podaj kod produktu do pobrania opinii: "
 
-@app.route('/analyzer')
+@app.route('/analyzer/<product.id>')
 def analyzer():
     return "Podaj kod produktu do analizy: "

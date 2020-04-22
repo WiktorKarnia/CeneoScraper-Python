@@ -15,25 +15,20 @@
 - treść: p.product-reviev-body
 - wady: div.cons-cell > cons
 - zalety div.pros-cell > pros
-
-
-## Etap 6
-/CeneoScraper
-    /run.py
-    /config.py
-    /app
-        /__init__.py
-        /views.py
-        /models.py
-        /scraper.py
-        /analyzer.py
-        /static/
-            /main.css
-            /Figures/
-                /fig.png
-        /templates/
-            base.html
-        /opinions
-        /figures
-    /requirements.txt
-    /.venv
+# Etap 2 -  pobranie wszystkich opinii z pojedyńczej strony
+- zapis składowych opinii od złożonej struktury danych 
+# Etap 3 - pobranie wszystkich opinii o pojedyńczym produkcie
+-sposób przechodzenia po kolejnych stronach z opiniami
+-eksport opinii do pliku (.csv lub .xlsx lub .json)
+# Etap 4 - ...
+-eliminacja powtarzających się fragmentów kodu
+-transformacja danych (typ danych, czyszczenie danych)
+# Etap 5 - analiza pobranych danych
+-zapis pobranych danych do obiektu dataframe (ramka danych)
+-wykonanie prostych obliczeń na danych
+-wykonanie prostych wykresów
+# Etap 6
+-zainstalowanie i uruchamianie Flask'a
+-struktura aplikacji /CeneoScraper /run.py /config.py /app /init.py /routes.py /models.py /scraper.py /analyzer.py /static/ /main.css /figures/ /fig.png /templates/ /base.html /opinions /requirements.txt /.venv /README.md
+-routing (nawigowanie po stronach serwisu)
+-widoki (jinja)
