@@ -15,3 +15,25 @@
 - treść: p.product-reviev-body
 - wady: div.cons-cell > cons
 - zalety div.pros-cell > pros
+
+
+## Etap 6
+/CeneoScraper
+    /run.py
+    /config.py
+    /app
+        /__init__.py
+        /views.py
+        /models.py
+        /scraper.py
+        /analyzer.py
+        /static/
+            /main.css
+            /Figures/
+                /fig.png
+        /templates/
+            base.html
+        /opinions
+        /figures
+    /requirements.txt
+    /.venv
