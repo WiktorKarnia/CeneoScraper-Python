@@ -1,14 +1,15 @@
 from app import app
+from flask import render_template
 
 @app.route('/')
 @app.route('/index')
 def index():
-    return "Hello world!"
+    return render_template("layout.htm")
 
 @app.route('/scraper')
 def scraper():
-    return "Podaj kod produktu do pobrania opinii: "
+    return "Podaj kod produktu do pobrania opinii"
 
-@app.route('/analyzer/<product.id>')
+@app.route('/analyzer/<product_id>')
 def analyzer():
-    return "Podaj kod produktu do analizy: "
+    return "Podaj kod produktu do analizy"

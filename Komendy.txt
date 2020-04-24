@@ -3,3 +3,4 @@ pip -V
 git init
 git remote add origin
 git pull origin master
+python -m flask run
