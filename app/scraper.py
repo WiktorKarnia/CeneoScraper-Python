@@ -5,14 +5,7 @@ import pprint
 import json
 
 #funkcja do ekstracji składowych opini
-def extract_feature(opinion, selector, attribute=None):
-    try:
-        if not attribute:
-            return opinion.select(selector).pop().get_text().strip()
-        else:
-            return opinion.select(selector).pop()[attribute]
-    except IndexError:
-        return None    
+    
 selectors = {
             "author": ['div.reviewer-name-line'],
             "recommendation":['div.product-review-summary > em'],
@@ -27,13 +20,7 @@ selectors = {
             "reviev_date":['span.review-time > time:nth-of-type(1)', "datetime"]
         }
 
-def remove_whitespace(text):
-    
-    try:
-        for char in ["\n","\r"]:
-            return text.replace(char, ", ")
-    except AttributeError:
-        pass     
+
 #adres URL strony z opiniami
 url_prefix = "https://www.ceneo.pl"
 product_id = input("Podaj kod produktu: ")
