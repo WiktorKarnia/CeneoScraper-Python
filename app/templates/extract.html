@@ -1,11 +1,11 @@
 {% extends 'layout.html' %}
 {% block body %}
     {% if form.product_code.errors %}
-        <div class="alert alert-danger alert-dismissable" role=a"alert">
+        <div class="alert alert-danger alert-dismissable fade show" role="alert">
             {% for error in form.product_code.errors %}
                 <p>{{ error }}</p>
             {% endfor %}
-            <button type="button" class="close" data-dismiss="alert" aria-label="close">
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
                 <span aria-hidden="true">&times;</span>
             </button>
         </div>

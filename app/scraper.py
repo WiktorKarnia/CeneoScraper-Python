@@ -1,25 +1,7 @@
-#import bibliotek
 import requests
 from bs4 import BeautifulSoup
 import pprint
 import json
-
-#funkcja do ekstracji składowych opini
-    
-selectors = {
-            "author": ['div.reviewer-name-line'],
-            "recommendation":['div.product-review-summary > em'],
-            "stars": ['span.review-score-count'],
-            "content":['p.product-review-body'],
-            "pros":['div.pros-cell > ul'],
-            "cons":['div.cons-cell > ul'],
-            "useful":['button.vote-yes', "data-total-vote"],
-            "useless":['button.vote-no', "data-total-vote"],
-            "purchased":['div.product-review-pz'],
-            "purchase_date":['span.review-time > time:nth-of-type(2)', "datetime"],
-            "reviev_date":['span.review-time > time:nth-of-type(1)', "datetime"]
-        }
-
 
 #adres URL strony z opiniami
 url_prefix = "https://www.ceneo.pl"
@@ -27,6 +9,7 @@ product_id = input("Podaj kod produktu: ")
 url_postfix = "#tab=reviews"
 url = url_prefix+"/"+product_id+url_postfix
 
+#pusta lista na opinie
 opinions_list = []
 
 while url is not None:
@@ -35,24 +18,20 @@ while url is not None:
     page_tree = BeautifulSoup(page_response.text, 'html.parser')
 
     #wybranie z kodu strony fragmentów odpowiadających poszczególnym opiniom
-    opinions = page_tree.select("li.review-box")
-
+    opinions = page_tree.select("li.js_product-review")
     
-
     #ekstrakcja składowyh dla pojedynczej opinii z listy
-    for opinion in opinions:
-        opinion_id = opinion["data-entry-id"]
-
+    for opinion in opinions: 
+      
         features = {key:extract_feature(opinion, *args)
                     for key, args in selectors.items()}
-
         features["opinion_id"] = int(opinion["data-entry-id"])
         features["purchased"] = True if features["purchased"] == "Opinia potwierdzona zakupem" else False
         features["useful"] = int(features["useful"])
         features["useless"] = int(features["useless"])
-        features["content"] = remove_whitespace(features["content"])
-        features["pros"] = remove_whitespace(features["pros"])
-        features["cons"] = remove_whitespace(features["cons"])
+        features["content"] = remove_whitespaces(features["content"])
+        features["pros"] = remove_whitespaces(features["pros"])
+        features["cons"] = remove_whitespaces(features["cons"])
         
 
         opinions_list.append(features)
@@ -64,11 +43,5 @@ while url is not None:
 
     print("url:",url)
 
-
 with open("opinions/"+product_id+".json", 'w', encoding="UTF-8") as fp:
-    json.dump(opinions_list, fp, ensure_ascii=False, separators=(",",": " ), indent=4)
-
-
-# print(len(opinions_list))
-# for opininon in opinions_list:
-#    pprint.pprint(opininon)
+    json.dump(opinions_list, fp, ensure_ascii=False, separators=(",",": "), indent=4 )
