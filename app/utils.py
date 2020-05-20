@@ -2,7 +2,7 @@
 
 
 
-def extract_feature(opinion, selector, attribute=None):
+def extract_feature(opinion, selector, attribute = None):
     try:
         if not attribute:
             return opinion.select(selector).pop().get_text().strip()
@@ -14,9 +14,9 @@ def extract_feature(opinion, selector, attribute=None):
 
 
 def remove_whitespace(text):
-    
     try:
         for char in ["\n","\r"]:
             return text.replace(char, ", ")
+        return text
     except AttributeError:
         pass     

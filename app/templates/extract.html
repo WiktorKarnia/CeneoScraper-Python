@@ -1,7 +1,7 @@
 {% extends 'layout.html' %}
 {% block body %}
     {% if form.product_code.errors %}
-        <div class="alert alert-danger alert-dismissable fade show" role="alert">
+        <div class="alert alert-danger alert-dismissible fade show" role="alert">
             {% for error in form.product_code.errors %}
                 <p>{{ error }}</p>
             {% endfor %}
@@ -9,10 +9,10 @@
                 <span aria-hidden="true">&times;</span>
             </button>
         </div>
-    {% endif%}
-    <form action="/extract" method="post">
-        {{ form.hidden_tag()}}
-        {{ form.product_code.label}} {{ form.product_code(size=20) }}
-        {{ form.submit(class="btn btn-info")}}
+    {% endif %}
+    <form method="POST" action="/extract">
+        {{ form.hidden_tag() }}
+        {{ form.product_code.label }} {{ form.product_code(size=20) }}
+        {{ form.submit(class_="btn btn-info") }}
     </form>
 {% endblock %}
