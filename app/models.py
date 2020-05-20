@@ -1,3 +1,4 @@
+#import bibliotek
 import requests
 from bs4 import BeautifulSoup
 from enum import Enum, auto
@@ -42,9 +43,13 @@ class Product():
                     url = None
                 print(len(opinions_list))
             self.opinions = opinions_list
+            print(len(self.opinions))
     def __str__(self):
         return f'product id: {self.product_id}\n nazwa: {self.name}\n\n'+'\n'.join(str(opinion) for opinion in self.opinions)
-
+    def __repr__(self):
+        pass
+    def save_product(self):
+        pass
 
 class Opinion:
     #lista składowych opinii wraz z selektorami i atrybutami
@@ -53,11 +58,11 @@ class Opinion:
         "recommendation":['span.user-post__author-recomendation > em'],
         "stars":['span.user-post__score-count'],
         "content": ['div.user-post__text'],
-        "pros": ['div.review-feature__col:has(div.review-feature__title--positive)'],
+        "pros": ['div.review-feature__col:has(div.review-feature__title--positives)'],
         "cons":['div.review-feature__col:has(div.review-feature__title--negatives)'], 
         "useful":['button.vote-yes', "data-total-vote"],
         "useless":['button.vote-no', "data-total-vote"],
-        "purchased":['div.product-review-pz'],
+        "purchased":['div.review-pz'],
         "purchase_date":['span.user-post__published > time:nth-of-type(1)',"datetime"],
         "review_date":['span.user-post__published > time:nth-of-type(2)',"datetime"]
     }
@@ -98,6 +103,6 @@ class Opinion:
         features["cons"] = utils.remove_whitespaces(features["cons"])
         pass
 
-product = Product("76891701")
+product = Product("79688141")
 product.extract_product()
 print(str(product))

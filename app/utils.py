@@ -1,7 +1,4 @@
-
-
-
-
+#funkcja do ekstrakcji składowych opinii
 def extract_feature(opinion, selector, attribute = None):
     try:
         if not attribute:
@@ -12,11 +9,11 @@ def extract_feature(opinion, selector, attribute = None):
         return None
 
 
-
-def remove_whitespace(text):
+#funkcja do usuwania znaków formatujących
+def remove_whitespaces(text):
     try:
-        for char in ["\n","\r"]:
-            return text.replace(char, ", ")
+        for char in ["\n", "\r"]:
+            text = text.replace(char, ". ")
         return text
     except AttributeError:
-        pass     
+        pass
